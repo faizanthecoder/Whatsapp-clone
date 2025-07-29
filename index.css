@@ -7,11 +7,43 @@ body{
     background-color: #1A1A1A;
 }
 
+.logo{
+display: flex;
+align-items: center;
+}
+
+.logo p{
+    font-size: 1.5rem;
+}
+
+.w-l{
+   /* size:rem; */
+
+}
+
+header{
+display: flex;
+justify-content: space-between;
+}
+
+header i{
+    padding: 20px;
+}
+
+header p{
+    color: white;
+}
+
 .main-inner{
     background-color: #2C2C2C;
-
+margin-left: 40px;
 }
 
 .main-inner-2{
     margin-left:5px
+}
+
+.side-bar{
+    display: flex;
+    flex-direction: column;
 }
