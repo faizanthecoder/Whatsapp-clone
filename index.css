@@ -7,6 +7,9 @@ body{
     background-color: #1A1A1A;
 }
 
+main{
+    display: flex;
+}
 .logo{
 display: flex;
 align-items: center;
@@ -27,23 +30,146 @@ justify-content: space-between;
 }
 
 header i{
-    padding: 20px;
+    padding: 15px;
 }
 
 header p{
     color: white;
 }
 
+
+
+.img{
+        border-radius:10rem ;
+    width: 30px;
+    height:30px;
+color: white;
+}
+
+.top-icons{
+display: flex;
+flex-direction: column;
+
+}
+
+.bottom-icons{
+display: flex;
+flex-direction: column;
+padding-bottom: 30px;
+}
+
 .main-inner{
+/* margin-left: 40px; */
+display: flex;
+}
+
+.main-inner-1{
+    /* margin-right: 10px; */
     background-color: #2C2C2C;
-margin-left: 40px;
+    margin: 00px 3px 0px 0px ;
+    padding:0px 20px 0px 20px;
+    border-radius: 10px;
+
 }
 
 .main-inner-2{
-    margin-left:5px
+    background-color: #2C2C2C;
+    margin:0px 0px 0px 00px;
+    padding: 100px 205px 0px 250px;
+    display: flex;
+  
+    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    /* padding:50px; */
+justify-content: flex-end;
+}
+
+.main-inner-2-inner{
+ /* background-color: #2C2C2C; */
+    margin:0px 0px 0px 00px;
+    padding: 100px 0px 150px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* padding:50px; */
+justify-content: center;
+}
+
+.main-inner-2-inner i{
+    
+    padding-bottom: 10px;
+}
+
+.main-inner-2 p{
+     color: rgb(180, 176, 176);
 }
 
 .side-bar{
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.side-bar i{
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+    padding: 10px;
+}
+
+.main-inner-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#chat{
+color: white;
+ font-size:1.5rem; 
+padding:10px 200px 10px 10px;
+}
+
+#search{
+ background-color: #1A1A1A;
+ padding: 5px;
+ color: white;
+ width: 22rem;
+
+    border-radius: 5px;
+}
+
+#search ::placeholder{
+    color: grey;
+}
+
+.chatss{
+padding: 10px;
+    display: flex;
+}
+
+.chatss img{
+    border-radius:10rem ;
+    width: 50px;
+    height: 50px;
+color: white;
+}
+
+.description{
+    padding-right: 140px;
+   color: rgb(180, 176, 176);   
+}
+
+
+.description h5{
+
+    color: white;
+}
+.meta-data{
+    color: rgb(180, 176, 176);
+}
+
+.privacy{
+margin-bottom: 30px;
 }
