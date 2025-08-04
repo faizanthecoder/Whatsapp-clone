@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp Clone</title>
+  <!-- Font Awesome for active icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Style -->
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #111b21;
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .side-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 260px;
+  background-color: #202c33;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+  transform: translateX(-100%); /* Hidden by default */
+  z-index: 100;
+}
+
+.side-bar.active {
+  transform: translateX(0); /* Slide in */
+}
+
+    .sidebar i {
+      font-size: 20px;
+      color: #8696a0;
+      padding: 20px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .chatlist {
+      width: 320px;
+      background-color: #111b21;
+      border-right: 1px solid #2a3942;
+      overflow-y: auto;
+    }
+
+    .chat-item {
+      padding: 15px;
+      border-bottom: 1px solid #2a3942;
+      cursor: pointer;
+    }
+
+    .chat-item:hover {
+      background-color: #2a3942;
+    }
+
+    .chat-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: #0b141a;
+    }
+
+    .chat-header {
+      height: 60px;
+      border-bottom: 1px solid #2a3942;
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      background-color: #202c33;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .message {
+      max-width: 60%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 10px;
+      position: relative;
+      word-wrap: break-word;
+    }
+
+    .received {
+      background-color: #202c33;
+      align-self: flex-start;
+    }
+
+    .sent {
+      background-color: #005c4b;
+      align-self: flex-end;
+    }
+
+    .timestamp {
+      font-size: 10px;
+      position: absolute;
+      bottom: -15px;
+      right: 10px;
+      opacity: 0.6;
+    }
+
+    .input-area {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      border-top: 1px solid #2a3942;
+    }
+
+    .input-area input {
+      flex: 1;
+      height: 40px;
+      border: none;
+      border-radius: 20px;
+      padding: 0 15px;
+      margin: 0 10px;
+      background-color: #2a3942;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div>
+      <i class="fa-solid fa-bars"></i>
+      <!-- <svg>SVG bar icon here</svg> -->
+      <i class="fa-solid fa-comment-dots"></i>
+      <!-- <svg>SVG comment icon here</svg> -->
+      <i class="fa-solid fa-phone"></i>
+      <!-- <svg>SVG phone icon here</svg> -->
+    </div>
+    <div>
+      <i class="fa-solid fa-gear"></i>
+      <!-- <svg>SVG gear icon here</svg> -->
+    </div>
+  </div>
+
+  <!-- Chat List -->
+  <div class="chatlist">
+    <div class="chat-item">Friend 1</div>
+    <div class="chat-item">Group A</div>
+    <div class="chat-item">Mom</div>
+    <div class="chat-item">Ali</div>
+    <div class="chat-item">Support Team</div>
+  </div>
+
+  <!-- Chat Area -->
+  <div class="chat-area">
+    <div class="chat-header">Friend 1</div>
+    <div class="messages">
+      <div class="message received">Hey, what's up?<span class="timestamp">11:05 AM</span></div>
+      <div class="message sent">All good, you?<span class="timestamp">11:06 AM</span></div>
+      <div class="message received">Need help with your clone?<span class="timestamp">11:07 AM</span></div>
+      <div class="message sent">Haha yes 😅<span class="timestamp">11:08 AM</span></div>
+    </div>
+    <div class="input-area">
+      <i class="fa-regular fa-face-smile"></i>
+      <!-- <svg><!-- SVG smile icon here --></svg> -->
+      <input type="text" placeholder="Type a message...">
+      <i class="fa-solid fa-paper-plane"></i>
+      <!-- <svg><!-- SVG send icon here --></svg> -->
+    </div>
+  </div>
+
+  <script>
+  const bar = document.querySelector("#bars");
+  const sidebar = document.querySelector(".side-bar");
+
+  bar.addEventListener("click", () => {
+    sidebar.classList.toggle("active");
+  });
+</script>
+
+</body>
+</html>
