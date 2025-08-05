@@ -1,0 +1,164 @@
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat UI</title>
+  <style>
+    body {
+      background: #2f2d2d;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    #newchat {
+      padding: 10px 20px;
+      background: #00a884;
+      color: white;
+      border: none;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .main-inner-1 {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .chatss {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #3c3c3c;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .chatss img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .description {
+      flex: 1;
+    }
+
+    .description h5 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .description p {
+      margin: 0;
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    .meta-data {
+      text-align: right;
+      font-size: 12px;
+    }
+
+    /* Hide file input */
+    #uploadProfile {
+      display: none;
+    }
+
+    .profile-container {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="newchat">➕ New Chat</button>
+  <input type="file" id="uploadProfile" accept="image/*">
+
+  <div class="main-inner-1"></div>
+
+  <script>
+    const newchat = document.querySelector("#newchat");
+    const main = document.querySelector(".main-inner-1");
+    const uploadInput = document.getElementById("uploadProfile");
+
+    // Default icon
+    const defaultPic = "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+
+    // Store uploaded profile pic
+    let currentProfilePic = localStorage.getItem("profile-pic") || defaultPic;
+
+    uploadInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function () {
+          currentProfilePic = reader.result;
+          localStorage.setItem("profile-pic", currentProfilePic);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    newchat.addEventListener("click", () => {
+      let name = prompt("Enter chat name:");
+      if (!name) return;
+
+      // Time
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      const currentTime = `${hours}:${minutes} ${ampm}`;
+
+      const chatObj = {
+        name,
+        time: currentTime,
+        pic: currentProfilePic
+      };
+
+      addChatToDOM(chatObj);
+
+      let chats = JSON.parse(localStorage.getItem("chats")) || [];
+      chats.push(chatObj);
+      localStorage.setItem("chats", JSON.stringify(chats));
+    });
+
+    function addChatToDOM({ name, time, pic }) {
+      const div = document.createElement("div");
+      div.classList.add("chatss");
+
+      div.innerHTML = `
+        <label class="profile-container">
+          <img src="${pic}" alt="Profile Picture" onclick="document.getElementById('uploadProfile').click()">
+        </label>
+        <div class="description">
+            <h5>${name}</h5>
+            <p>image</p>
+        </div>
+        <div class="meta-data">
+            <p>${time}</p>
+            <p><!-- svg here --></p>
+        </div>
+      `;
+
+      main.append(div);
+    }
+
+    // Load from localStorage
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedChats = JSON.parse(localStorage.getItem("chats")) || [];
+      savedChats.forEach(chat => addChatToDOM(chat));
+    });
+  </script>
+
+</body>
+</html>
+

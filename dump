@@ -1,0 +1,249 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WhatsApp Clone</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background-color: #111;
+      overflow: hidden;
+    }
+
+    .main {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      background-color: #111;
+    }
+
+    .main-inner-2 {
+      width: 30%;
+      background-color: #202c33;
+      padding: 10px;
+      color: white;
+      overflow-y: auto;
+      border-right: 1px solid #2a3942;
+    }
+
+    .chatss {
+      padding: 15px;
+      border-bottom: 1px solid #2a3942;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .chatss:hover {
+      background-color: #2a3942;
+    }
+
+    .main-inner-chats {
+      width: 70%;
+      background-color: #111b21;
+      color: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      padding: 15px;
+      background-color: #202c33;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .chat-footer {
+      padding: 10px;
+      background-color: #202c33;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-footer input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+    }
+
+    .fa-icon {
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+  
+    <div class="main-inner-2">
+      <div class="chatss" data-name="Chat 1">Chat 1</div>
+      <div class="chatss" data-name="Chat 2">Chat 2</div>
+      <div class="chatss" data-name="Chat 3">Chat 3</div>
+      <div class="chatss" data-name="Chat 4">Chat 4</div>
+    </div>
+
+    <div class="main-inner-chats">
+      <div class="chat-header">
+        <span id="chatName">Select a Chat</span>
+        <i class="fa-solid fa-ellipsis-vertical fa-icon"></i>
+      </div>
+
+      <div class="chat-body" id="chatBody">
+        <p>Welcome to your WhatsApp clone.</p>
+      </div>
+
+      <div class="chat-footer">
+        <i class="fa-regular fa-face-smile fa-icon"></i>
+        <input type="text" placeholder="Type a message..."/>
+        <i class="fa-solid fa-paper-plane fa-icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const chats = document.querySelectorAll(".chatss");
+    const chatName = document.getElementById("chatName");
+    const chatBody = document.getElementById("chatBody");
+
+    chats.forEach(chat => {
+      chat.addEventListener("click", () => {
+        const name = chat.getAttribute("data-name");
+        chatName.textContent = name;
+        chatBody.innerHTML = `<p>This is a conversation with <strong>${name}</strong>.</p>`;
+      });
+    });
+  </script>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title> -->
+    <!-- <style>
+
+
+
+  .search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 300px; /* adjust as needed */
+  }
+
+  .search-wrapper input {
+    width: 100%;
+    padding: 10px 10px 10px 35px; /* space for icon */
+    border-radius: 20px;
+    border: none;
+    background-color: #202c33;
+    color: white;
+    outline: none;
+  }
+
+  .search-wrapper i {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    transform: translateY(-50%);
+    color: #888;
+    pointer-events: none;
+  }
+</style> -->
+
+<!-- <style>
+  .profile-container {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+
+  #profilePic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 3px solid #25d366;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+</style>
+</head>
+
+
+<body>
+  <label class="profile-container" for="uploadProfile">
+  <img id="profilePic" src="img.png" alt="Profile Picture">
+</label>
+<input type="file" id="uploadProfile" accept="image/*">
+<-- <div class="profile-container">
+  <img id="profilePic" src="img.png" alt="Profile Picture" class="profile-pic">
+  <div class="upload-icon">
+    <i class="fa fa-camera" style="color:white;"></i>
+    <input type="file" id="uploadProfile" accept="image/*">
+  </div>
+</div> 
+<script>
+let uploadInput = document.getElementById("uploadProfile");
+let profilePic = document.getElementById("profilePic");
+
+uploadInput.addEventListener("change", function () {
+  const file = this.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      profilePic.src = reader.result;
+
+      // Optional: Save in localStorage to keep image on reload
+      localStorage.setItem("profile-pic", reader.result);
+    };
+
+    reader.readAsDataURL(file);
+  }
+});
+
+// Load saved image on page load (optional)
+window.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("profile-pic");
+  if (saved) profilePic.src = saved;
+});
+
+
+</script>
+<
+<div class="search-wrapper">
+  <i class="fa-solid fa-magnifying-glass fa-flip-horizontal"></i>
+  <input type="text" id="search" placeholder="Search or start a new chat">
+</div> 
+
+</body>
+</html>
+ -->
+
