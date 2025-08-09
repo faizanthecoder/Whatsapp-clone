@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>WhatsApp — Responsive (single file)</title>
+<script src="https://kit.fontawesome.com/62508fe277.js" crossorigin="anonymous"></script>
+<style>
+  :root{
+    --sidebar-width-expanded: 120px; /* base — JS will bump on very large screens */
+    --sidebar-width-collapsed: 60px;
+    --sidebar-width: var(--sidebar-width-expanded);
+    --topbar-height: 56px;
+    --left-panel-width: 360px; /* chat list width on large screens */
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:#1A1A1A;color:#fff;min-height:100vh;
+  }
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 16px;background:#242424;position:relative;z-index:20;
+  }
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo p{font-size:1.3rem;margin-left:0.2rem}
+
+  /* SIDEBAR */
+  .side-bar{
+    position:fixed;left:0;top:0;height:100vh;
+    width:var(--sidebar-width);
+    background:#1e1e1e;color:#fff;display:flex;flex-direction:column;
+    justify-content:space-between;padding:12px;gap:6px;transition:width .25s ease, height .25s ease;
+    z-index:30;border-right:1px solid rgba(255,255,255,0.03);
+  }
+
+  .side-bar .group{display:flex;flex-direction:column;gap:6px}
+  .q1{
+    display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;cursor:pointer;
+    transition:background .15s, transform .12s;
+  }
+  .q1:hover{background:rgba(255,255,255,0.04);transform:translateX(2px)}
+  .q1 i{font-size:1.25rem}
+  .side-text{white-space:nowrap;transition:opacity .18s, transform .18s;opacity:1}
+  .side-bar.closed .side-text{opacity:0;transform:translateX(-6px);pointer-events:none;width:0}
+  /* center icons when collapsed */
+  .side-bar.closed .q1{justify-content:center;padding-left:0;padding-right:0}
+
+  /* bottom small icon area */
+  .bottom-icon-outer{margin-bottom:8px}
+
+  /* MAIN APP LAYOUT */
+  main{transition:margin-left .25s; margin-left:var(--sidebar-width); padding:12px;}
+  .app-grid{display:grid;grid-template-columns:var(--left-panel-width) 1fr;gap:12px;align-items:start}
+  .left-panel{background:#2C2C2C;border-radius:10px;padding:14px;min-height:70vh}
+  .right-panel{background:#2C2C2C;border-radius:10px;padding:26px;min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .main-inner-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .main-inner-header i{padding:8px;border-radius:6px}
+  .chat-search{position:relative;margin:10px 0}
+  .chat-search i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#888}
+  #search{width:100%;padding:10px 12px 10px 36px;border-radius:8px;background:#151515;border:1px solid rgba(39,151,39,0.15);color:#fff}
+
+  /* chat preview stub */
+  .chat-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;margin-top:6px;cursor:pointer}
+  .chat-item:hover{background:rgba(255,255,255,0.02)}
+  .avatar{width:48px;height:48px;border-radius:50%;background:#444;display:flex;align-items:center;justify-content:center;font-weight:700}
+  .meta{color:rgb(180,176,176);font-size:0.95rem}
+
+  /* responsive behaviour: topbar for small screens */
+  /* adds a body class 'topbar' (set by JS) when width <= 900px */
+  body.topbar .side-bar{
+    position:fixed;top:0;left:0;right:0;height:var(--topbar-height);width:100%;
+    display:flex;flex-direction:row;align-items:center;justify-content:space-around;padding:6px 10px;border-radius:0;
+  }
+  body.topbar main{margin-left:0;padding-top:var(--topbar-height);}
+
+  /* adjust main grid when small */
+  @media (max-width:900px){
+    .app-grid{grid-template-columns:1fr;gap:10px}
+    .left-panel{order:2}
+    .right-panel{order:1}
+    :root{--left-panel-width:100%}
+  }
+
+  /* bigger screens bump sizes */
+  @media (min-width:1200px){
+    :root{--sidebar-width-expanded:160px; --sidebar-width-collapsed:70px; --left-panel-width:420px}
+    .q1 i{font-size:1.45rem}
+    .logo p{font-size:1.5rem}
+    header{padding:14px 22px}
+    main{padding:20px}
+    .right-panel{padding:40px}
+  }
+
+  /* ensure collapse width uses the collapsed var (JS updates --sidebar-width accordingly) */
+  /* small cosmetic */
+  .privacy{margin-top:20px;color:rgb(180,176,176)}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <i class="fa-brands fa-whatsapp" style="color:#25D366;font-size:1.6rem"></i>
+    <p>Whatsapp</p>
+  </div>
+  <div class="access">
+    <i id="minimize" class="fa-solid fa-minus"></i>
+    <i id="expand" class="fa-solid fa-expand"></i>
+    <i id="close" class="fa-solid fa-xmark"></i>
+  </div>
+</header>
+
+<!-- sidebar -->
+<nav class="side-bar closed" id="sidebar" aria-label="Primary">
+  <div class="group">
+    <!-- top toggle sits here -->
+    <div id="bars" class="q1" title="Toggle sidebar">
+      <i class="fa-solid fa-bars"></i>
+      <span class="side-text">Menu</span>
+    </div>
+
+    <div class="q1"><i class="fa-solid fa-message"></i><span class="side-text">Chats</span></div>
+    <div class="q1"><i class="fa-solid fa-phone"></i><span class="side-text">Calls</span></div>
+    <div class="q1"><i class="fa-solid fa-signal"></i><span class="side-text">Status</span></div>
+    <div class="q1"><i class="fa-regular fa-circle"></i><span class="side-text">Meta AI</span></div>
+  </div>
+
+  <div class="bottom-icon-outer">
+    <div class="q1"><i class="fa-solid fa-gear"></i><span class="side-text">Settings</span></div>
+  </div>
+</nav>
+
+<!-- main content area -->
+<main id="main">
+  <div class="app-grid">
+    <section class="left-panel">
+      <div class="main-inner-header">
+        <p style="font-size:1.2rem;margin:0">Chats</p>
+        <div style="display:flex;gap:8px;align-items:center">
+          <i id="newchat" class="fa-regular fa-clipboard"></i>
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </div>
+      </div>
+
+      <div class="chat-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="search" placeholder="Search or start a new chat" />
+      </div>
+
+      <!-- chat list (example items) -->
+      <div id="chatList">
+        <div class="chat-item">
+          <div class="avatar">G</div>
+          <div>
+            <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
+              <strong>General discussion</strong>
+              <small class="meta">1:00 pm</small>
+            </div>
+            <div class="meta">Some last message preview goes here...</div>
+          </div>
+        </div>
+
+        <div class="chat-item">
+          <div class="avatar">A</div>
+          <div>
+            <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
+              <strong>Faizan</strong>
+              <small class="meta">Yesterday</small>
+            </div>
+            <div class="meta">Another preview line...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="right-panel">
+      <i class="fa-brands fa-whatsapp" style="color:rgb(180,176,176);font-size:4rem"></i>
+      <h3 style="margin:10px 0 4px 0">WhatsApp for Windows</h3>
+      <p style="color:rgb(180,176,176);text-align:center;max-width:560px">
+        Send and receive messages without keeping your phone online. Use WhatsApp on up to 4 linked devices and 1 phone at the same time.
+      </p>
+      <div class="privacy">End-to-end encrypted</div>
+    </section>
+  </div>
+</main>
+
+<script>
+/*
+  Sidebar behavior:
+  - Collapses into an icon-only vertical bar on large/desktop (click bars icon)
+  - Converts to a compact top horizontal icon bar on small screens (<=900px)
+  - JS updates CSS variables so main margin-left matches sidebar width
+*/
+
+(function () {
+  const sidebar = document.getElementById('sidebar');
+  const barsBtn = document.getElementById('bars');
+  const root = document.documentElement;
+  const body = document.body;
+  let collapsed = sidebar.classList.contains('closed');
+
+  function computeSizes() {
+    const w = window.innerWidth;
+    // increase sizes on very large screens
+    const expanded = w >= 1200 ? 160 : 120;
+    const collapsedW = w >= 1200 ? 70 : 60;
+    root.style.setProperty('--sidebar-width-expanded', expanded + 'px');
+    root.style.setProperty('--sidebar-width-collapsed', collapsedW + 'px');
+
+    // topbar trigger at <=900px
+    if (w <= 900) {
+      body.classList.add('topbar');
+      // don't push content to the side when topbar active
+      root.style.setProperty('--sidebar-width', '0px');
+    } else {
+      body.classList.remove('topbar');
+      // normal left sidebar width depends on collapsed state
+      root.style.setProperty('--sidebar-width', (collapsed ? collapsedW : expanded) + 'px');
+    }
+    // also update left-panel width variable (so main grid adapts)
+    root.style.setProperty('--left-panel-width', w >= 1200 ? '420px' : (w >= 900 ? '360px' : '100%'));
+  }
+
+  // toggle collapse when clicking the bars icon
+  barsBtn.addEventListener('click', () => {
+    collapsed = !collapsed;
+    if (collapsed) {
+      sidebar.classList.add('closed');
+    } else {
+      sidebar.classList.remove('closed');
+    }
+    // update var for main margin-left unless we are in topbar mode
+    if (!body.classList.contains('topbar')) {
+      const collapsedW = parseInt(getComputedStyle(root).getPropertyValue('--sidebar-width-collapsed')) || 60;
+      const expanded = parseInt(getComputedStyle(root).getPropertyValue('--sidebar-width-expanded')) || 120;
+      root.style.setProperty('--sidebar-width', (collapsed ? collapsedW : expanded) + 'px');
+    }
+  });
+
+  // watch resize so we switch between left sidebar and topbar automatically
+  window.addEventListener('resize', computeSizes);
+
+  // initial setup
+  computeSizes();
+
+  // optional: set header/main spacing on load
+  window.addEventListener('DOMContentLoaded', computeSizes);
+})();
+</script>
+</body>
+</html>

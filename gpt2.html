@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>WhatsApp-style Responsive Sidebar (Single File)</title>
+<!-- Font Awesome CDN for icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<style>
+  :root{
+    --topbar-height:56px;
+    --sidebar-expanded:250px;
+    --sidebar-collapsed:72px;
+    --sidebar-collapsed-narrow:56px;
+    --gap:12px;
+    --bg:#121212;
+    --card:#2C2C2C;
+    --muted:rgb(180,176,176);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:var(--bg); color:#fff; min-height:100vh;
+  }
+
+  /* HEADER */
+  header{
+    height:var(--topbar-height);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:8px 14px;background:rgba(0,0,0,0.25);backdrop-filter:blur(2px);
+    position:fixed;top:0;left:0;right:0;z-index:60;border-bottom:1px solid rgba(255,255,255,0.03)
+  }
+  .header-left{display:flex;align-items:center;gap:10px}
+  .logo-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;color:#25D366}
+  .app-title{font-size:1.05rem;font-weight:600}
+  .header-right{display:flex;gap:8px;align-items:center}
+  header .fa{opacity:0.95}
+
+  /* LAYOUT: sidebar + main */
+  .sidebar{
+    position:fixed;top:0;left:0;height:100vh;padding:12px 10px;
+    width:var(--sidebar-expanded);background:#1e1e1e;border-right:1px solid rgba(255,255,255,0.03);
+    display:flex;flex-direction:column;justify-content:space-between;gap:8px;z-index:50;
+    transition:width .28s ease, transform .28s ease;
+  }
+
+  /* collapsed state (desktop) */
+  .sidebar.collapsed{width:var(--sidebar-collapsed)}
+  .sidebar .group{display:flex;flex-direction:column;gap:6px}
+  .item{
+    display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;cursor:pointer;transition:background .12s, transform .12s;
+  }
+  .item:hover{background:rgba(255,255,255,.03);transform:translateX(3px)}
+  .item .icon{font-size:1.2rem;width:36px;text-align:center}
+  .item .label{white-space:nowrap;opacity:1;transition:opacity .18s, transform .18s}
+  .sidebar.collapsed .label{opacity:0;transform:translateX(-6px);pointer-events:none}
+
+  /* when collapsed, center icons vertically (visually like a bar) */
+  .sidebar.collapsed .group{align-items:center}
+
+  /* bottom area */
+  .sidebar .bottom{display:flex;flex-direction:column;gap:8px;align-items:center}
+
+  /* MAIN content area (below header) */
+  main{
+    margin-top:var(--topbar-height);
+    margin-left:var(--sidebar-expanded);
+    padding:18px;min-height:calc(100vh - var(--topbar-height));
+    transition:margin-left .28s ease;
+  }
+  .sidebar.collapsed ~ main{margin-left:var(--sidebar-collapsed)}
+  .content-grid{display:grid;grid-template-columns:380px 1fr;gap:18px}
+  .card{background:var(--card);border-radius:10px;padding:14px;box-shadow:0 2px 0 rgba(0,0,0,.25)}
+
+  /* chat list UI stub */
+  .search{display:flex;align-items:center;gap:8px;background:#151515;padding:10px;border-radius:8px}
+  .search input{background:transparent;border:0;color:#fff;outline:none;width:100%}
+
+  .chat-item{display:flex;gap:12px;align-items:center;padding:10px;border-radius:8px;margin-top:8px;cursor:pointer}
+  .avatar{width:46px;height:46px;border-radius:50%;background:#444;display:flex;align-items:center;justify-content:center;font-weight:700}
+  .meta{color:var(--muted);font-size:.95rem}
+
+  /* right panel center message */
+  .right-centre{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;height:60vh;text-align:center;color:var(--muted)}
+  .right-centre .large-icon{font-size:4.2rem;color:rgba(255,255,255,.65)}
+
+  /* MOBILE / SMALL: convert sidebar to top horizontal bar */
+  @media (max-width:900px){
+    .sidebar{
+      position:fixed;top:0;left:0;right:0;height:var(--topbar-height);width:100%;display:flex;flex-direction:row;align-items:center;padding:6px 10px;
+      border-right:0;border-bottom:1px solid rgba(255,255,255,0.03);
+    }
+    /* collapsed has no meaning for topbar, keep icons visible */
+    .sidebar.collapsed{width:100%}
+    .sidebar .group{flex-direction:row;gap:8px;align-items:center;justify-content:flex-start}
+    .item{padding:8px;border-radius:8px}
+    .item .label{display:none}
+    /* main margins */
+    main{margin-left:0;margin-top:var(--topbar-height)}
+    .content-grid{grid-template-columns:1fr;gap:12px}
+    .right-centre{height:42vh}
+  }
+
+  /* LARGE monitor upscale */
+  @media (min-width:1400px){
+    :root{--sidebar-expanded:300px;--sidebar-collapsed:84px}
+    .content-grid{grid-template-columns:420px 1fr}
+    .avatar{width:56px;height:56px}
+    .item .icon{font-size:1.5rem;width:44px}
+    .logo-icon{width:42px;height:42px;font-size:1.5rem}
+  }
+
+  /* small aesthetic */
+  .muted{color:var(--muted);font-size:.95rem}
+  /* overlay for mobile when sidebar slides in (only used if we implement slide show) */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40;display:none}
+  .overlay.show{display:block}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div id="hamb" class="logo-icon" title="Menu (click)">
+      <i class="fa fa-bars"></i>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <div class="logo-icon" aria-hidden="true"><i class="fa-brands fa-whatsapp"></i></div>
+      <div class="app-title">Whatsapp</div>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <i class="fa-regular fa-square"></i>
+    <i class="fa-solid fa-window-maximize"></i>
+    <i class="fa-solid fa-xmark"></i>
+  </div>
+</header>
+
+<!-- overlay for mobile drawer -->
+<div id="overlay" class="overlay"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar" class="sidebar collapsed" aria-label="Primary sidebar">
+  <div class="group">
+    <!-- top toggle is the same hamb button but this is the label area -->
+    <div id="toggle" class="item" title="Toggle sidebar">
+      <div class="icon"><i class="fa fa-bars"></i></div>
+      <div class="label">Menu</div>
+    </div>
+
+    <div class="item">
+      <div class="icon"><i class="fa-regular fa-comments"></i></div>
+      <div class="label">Chats</div>
+    </div>
+
+    <div class="item">
+      <div class="icon"><i class="fa-solid fa-phone"></i></div>
+      <div class="label">Calls</div>
+    </div>
+
+    <div class="item">
+      <div class="icon"><i class="fa-solid fa-signal"></i></div>
+      <div class="label">Status</div>
+    </div>
+
+    <div class="item">
+      <div class="icon"><i class="fa-regular fa-circle"></i></div>
+      <div class="label">Meta AI</div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="item">
+      <div class="icon"><i class="fa-solid fa-gear"></i></div>
+      <div class="label">Settings</div>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="fa-solid fa-comment-dots"></i></div>
+      <div class="label">New chat</div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+  <div class="content-grid">
+    <aside class="card" aria-label="Chat list">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <strong style="font-size:1.05rem">Chats</strong>
+        <div style="display:flex;gap:8px;align-items:center"><i class="fa-regular fa-clipboard"></i><i class="fa-solid fa-ellipsis-vertical"></i></div>
+      </div>
+
+      <div class="search" style="margin-bottom:12px">
+        <i class="fa fa-magnifying-glass" style="opacity:.7"></i>
+        <input placeholder="Search or start a new chat" />
+      </div>
+
+      <div id="chatList">
+        <div class="chat-item card" style="background:transparent">
+          <div class="avatar">G</div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center"><strong>General discussion</strong><small class="muted">1:00 pm</small></div>
+            <div class="meta">Some last message preview goes here...</div>
+          </div>
+        </div>
+
+        <div class="chat-item card" style="background:transparent">
+          <div class="avatar">A</div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center"><strong>Faizan</strong><small class="muted">Yesterday</small></div>
+            <div class="meta">Another preview line...</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="card" aria-label="Main area">
+      <div class="right-centre">
+        <div class="large-icon"><i class="fa-brands fa-whatsapp"></i></div>
+        <h3 style="margin:6px 0">WhatsApp for Windows</h3>
+        <p style="max-width:640px;color:var(--muted)">
+          Send and receive messages without keeping your phone online. Use WhatsApp on up to 4 linked devices and 1 phone at the same time.
+        </p>
+        <div class="muted">End-to-end encrypted</div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+/*
+  Behavior:
+  - Desktop: sidebar toggles between expanded and collapsed widths.
+  - Mobile (<=900px): sidebar becomes top horizontal bar; clicking hamburger toggles a mobile drawer (slide down/up).
+  - Clicking outside on mobile closes drawer.
+  - Also updates --sidebar-expanded/--sidebar-collapsed sizes for very large screens.
+*/
+
+(function(){
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('toggle');
+  const hamb = document.getElementById('hamb');
+  const overlay = document.getElementById('overlay');
+  const root = document.documentElement;
+  let collapsed = true; // default: collapsed (icon-only)
+  let mobileDrawerOpen = false;
+
+  // set initial responsive sizes based on width
+  function updateSizes(){
+    const w = window.innerWidth;
+    if (w >= 1400){
+      root.style.setProperty('--sidebar-expanded','300px');
+      root.style.setProperty('--sidebar-collapsed','84px');
+      root.style.setProperty('--sidebar-collapsed-narrow','64px');
+    } else if (w >= 1200){
+      root.style.setProperty('--sidebar-expanded','260px');
+      root.style.setProperty('--sidebar-collapsed','76px');
+      root.style.setProperty('--sidebar-collapsed-narrow','60px');
+    } else {
+      root.style.setProperty('--sidebar-expanded','250px');
+      root.style.setProperty('--sidebar-collapsed','72px');
+      root.style.setProperty('--sidebar-collapsed-narrow','56px');
+    }
+
+    // if mobile width -> ensure topbar behavior
+    if (w <= 900){
+      // remove collapsed visual effect for topbar, but keep 'collapsed' class for width var handling
+      sidebar.classList.remove('collapsed'); // labels hidden via CSS in media query
+      collapsed = false;
+    } else {
+      // restore collapsed state
+      if (collapsed) sidebar.classList.add('collapsed'); else sidebar.classList.remove('collapsed');
+    }
+  }
+
+  // toggle for desktop (collapse/expand) OR mobile (open drawer)
+  function toggleSidebar(){
+    if (window.innerWidth <= 900){
+      // mobile: toggle drawer overlay
+      mobileDrawerOpen = !mobileDrawerOpen;
+      if (mobileDrawerOpen){
+        overlay.classList.add('show');
+        // slide the sidebar down by toggling transform: we'll fake by adding a class
+        sidebar.style.transform = 'translateY(0)';
+        sidebar.style.boxShadow = '0 8px 30px rgba(0,0,0,.6)';
+      } else {
+        overlay.classList.remove('show');
+        sidebar.style.transform = '';
+        sidebar.style.boxShadow = '';
+      }
+    } else {
+      // desktop: collapse/expand widths
+      collapsed = !collapsed;
+      if (collapsed) sidebar.classList.add('collapsed'); else sidebar.classList.remove('collapsed');
+      // adjust main margin-left by toggling class (CSS handles using sibling selector)
+      // nothing else needed here
+    }
+  }
+
+  // close mobile drawer
+  function closeMobile(){
+    mobileDrawerOpen = false;
+    overlay.classList.remove('show');
+    sidebar.style.transform = '';
+    sidebar.style.boxShadow = '';
+  }
+
+  // clicks
+  toggle.addEventListener('click', toggleSidebar);
+  hamb.addEventListener('click', toggleSidebar);
+  overlay.addEventListener('click', closeMobile);
+
+  // close mobile when clicking outside main area
+  document.addEventListener('click', (e)=>{
+    if (window.innerWidth <= 900 && mobileDrawerOpen){
+      const withinSidebar = sidebar.contains(e.target);
+      const withinHamb = hamb.contains(e.target) || toggle.contains(e.target);
+      if (!withinSidebar && !withinHamb) closeMobile();
+    }
+  });
+
+  // resize watcher
+  window.addEventListener('resize', ()=>{
+    updateSizes();
+    // if we resized to desktop, ensure overlay closed
+    if (window.innerWidth > 900) closeMobile();
+  });
+
+  // initial
+  updateSizes();
+})();
+</script>
+</body>
+</html>

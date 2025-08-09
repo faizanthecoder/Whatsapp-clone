@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .side-bar {
+    width: 200px;
+    height: 100vh;
+    background-color: #1e1e1e;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: width 0.3s ease;
+    overflow: hidden;
+}
+
+.side-bar.closed {
+    width: 60px;
+}
+
+.q1 {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.q1:hover {
+    background: #333;
+}
+
+.side-text {
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+}
+
+.side-bar.closed .side-text {
+    opacity: 0;
+}
+
+.bottom-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+    </style>
+</head>
+<body>
+    
+    <div class="side-bar">
+    <div class="top-icon-outer absolute">
+        <div class="ctm">
+            <div id="bars" class="q1">
+                <i>☀️</i>
+                <p class="side-text visible">Chats</p>
+            </div>
+            <div class="q1">
+                <i class="fa-solid fa-message" style="color: #ffffff;"></i>
+                <p class="side-text visible">Chats</p>
+            </div>
+            <div class="q1">
+                <i id="phone" class="fa-solid fa-phone" style="color: #ffffff;"></i>
+                <p class="side-text visible">Calls</p>
+            </div>
+            <div class="q1">
+                <i id="status" class="fa-solid fa-signal" style="color: #ffffff;"></i>
+                <p class="side-text visible">Status</p>
+            </div>
+            <div class="q1">
+                <i class="fa-regular fa-circle" style="color: #1120e8;"></i>
+                <p class="h visible">Meta AI</p>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-icon-outer">
+        <div class="bottom-icons">
+            <div id="message"><i class="fa-regular fa-star" style="color: #ffffff;"></i></div>
+            <div id="message"><i class="fa-solid fa-box-archive" style="color: #ffffff;"></i></div>
+            <div id="message"><i class="fa-solid fa-gear" style="color: #ffffff;"></i></div>
+            <div id="message"><i class="fa-regular fa-user" style="color: #ffffff;"></i></div>
+        </div>
+    </div>
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const sidebar = document.querySelector(".side-bar");
+    const bars = document.getElementById("bars");
+
+    bars.addEventListener("click", () => {
+        sidebar.classList.toggle("closed");
+    });
+});
+</script>
+
+
+</body>
+</html>
+<!-- 
+ <div class="side-bar">
+            <div class="top-icon-outer absolute ">
+                <div class="ctm">
+                <!-- <div class="top-icons">  -->
+                <!-- <div> -->
+                <div id="bars" class="q1">
+                    <!-- <i  class="fa-solid fa-bars" style="color: #ffffff;"></i> -->
+                     <i>☀️</i>
+                    <p class="side-text visible">Chats</p>
+
+                </div>
+                <div class="q1 ">
+                    <i class="fa-solid fa-message" style="color: #ffffff;"></i>
+                    <p class="side-text visible">Chats</p>
+                </div>
+                <div class="q1">
+                    <i id="phone" class="fa-solid fa-phone" style="color: #ffffff;"></i>
+                    <p class="side-text visible">Calls</p>
+                </div>
+                <div class="q1">
+                    <i id="status" class="fa-solid fa-signal" style="color: #ffffff;"></i>
+                    <p class="side-text visible">Status</p>
+                </div>
+                <p></p>
+                <div  class="q1">
+                    <i class="fa-regular fa-circle" style="color: #1120e8;"></i>
+                    <p class="h visible">Meta AI</p>
+                </div>
+                </div>
+            </div>
+
+            <!-- <div class="c-t-m ">
+                    <p  style="padding-bottom: px; ">Side bar</p>
+                    <p onclick="mosag()" style="padding-bottom:px;">Chats</p>
+                    <p onclick="pho()" style="padding-top:px;">Calls</p>
+                    <p onclick="stat()" style="padding-top:px;">Status</p>
+                    <p style="padding-top: px;">Meta AI</p>
+
+                </div> -->
+
+        </div>
+        <div class="bottom-icon-outer">
+
+            <div class="bottom-icons">
+                <!-- <div id="message"> <i id="bars" class="fa-solid fa-bars" style="color: #ffffff;"></i></div> -->
+                <div id="message"> <i class="fa-regular fa-star" style="color: #ffffff;"></i>
+                    <!-- <p>Chats</p> -->
+                </div>
+                <div id="message"><i class="fa-solid fa-box-archive" style="color: #ffffff;"></i>
+                    <!-- <p>Calls</p> -->
+                </div>
+                <div id="message"> <i class="fa-solid fa-gear" style="color: #ffffff;"></i>
+                    <!-- <p>Status</p> -->
+                </div>
+                <p></p>
+                <!-- <div id="message"> <img class="img" src="img.png" alt=""></i></div> -->
+                <div id="message"> <i class="fa-regular fa-user" style="color: #ffffff;"></i>
+
+
+
+
+                    <!-- <p>Meta AI</p> -->
+                </div>
+
+                <!-- <i class="fa-regular fa-star" style="color: #ffffff;"></i>
+                <p>Satrred messages   </p>
+                <p></p>
+                <i class="fa-solid fa-recycle" style="color: #ffffff;"></i><
+                p>Archived chats</p>
+                <i class="fa-regular fa-gear" style="color: #ffffff;"></i>
+                <p>Settings AI</p>
+
+                <img class="img" src="img.png" alt=""><p>Profile AI</p> -->
+            </div>
+
+            <div class="c-t-m">
+                <!-- <p></p> -->
+                <p style="padding-bottom: 0px;">Starred messages</p>
+                <p style="padding-top: 12px;">Archived chats</p>
+                <p style="padding-top: 12px;">Settings</p>
+                <p style="padding-top: 12px;">Profile</p>
+
+            </div>
+        </div>
+
+        </div> -->
