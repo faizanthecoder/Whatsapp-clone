@@ -91,36 +91,57 @@
                     <input type="text" id="search" placeholder="search or start a new chat">
 
                 </div>
+                <!-- <div class="chats">
+    <div class="chats-inner">
+
+        <button id="deleteSelected" style="display:none;">Delete Selected</button>
+
+        Menu
+        <ul class="chats-inner-ul" style="display: none;">
+            <li id="selectAllOption">Select All</li>
+            <li id="addTop">Add to top</li>
+            <li id="deleteChat">Delete</li>
+            <li id="renameChat">Rename</li>
+            <li id="addFav">Add to favourite</li>
+        </ul>
+
+    </div>
+</div> -->
+
                 <div class="chats">
                     <div class="chats-inner">
+                        <button id="deleteSelected" style="display:none;">Delete Selected</button>
+
                         <ul class="chats-inner-ul" style="display: none;">
                             <li id="addTop">Add to top</li>
                             <li id="deleteChat">Delete</li>
                             <li id="renameChat">Rename</li>
                             <li id="addFav">Add to favourite</li>
+
+                            <!-- NEW: select options  -->
+                            <li id="selectThisOption">Select chat</li>
+                            <li id="selectAllOption">Select All</li>
                         </ul>
 
-                        <!-- <ul class="chats-inner-ul">
-                            <li>Add top top</li>
-                            <li>Delete</li>
-                            <li>REname</li>
-                            <li>Add to favouritr</li>
-                        </ul> -->
-
-                        <!-- <div class="chatss">
-                            <img src="img.png" alt="error">
-                            <div class="description">
-                                <h5>General discussion</h5>
-                                <p>image</p>
-                            </div>
-                            <div class="meta-data">
-                                <p> 1:00 pm </p>
-                                <p>svg</p>
-                            </div>
-                        </div> -->
 
                     </div>
                 </div>
+
+                <!-- Example chat -->
+                <!--  
+        <div class="chatss">
+            <img src="img.png" alt="error">
+            <div class="description">
+                <h5>General discussion</h5>
+                <p>image</p>
+            </div>
+            <div class="meta-data">
+                <p> 1:00 pm </p>
+                <p>svg</p>
+            </div>
+        </div>
+         -->
+
             </div>
 
             <div class="left-panel-1">
@@ -173,18 +194,54 @@
                 </div>
             </div>
 
-            <div style="display: none;" class="right-panel-chats">
+            <div class="right-panel-chats">
+                <div class="right-panel-header">
+                    <div class="right-panel-header-profile">
+                        <!-- <input type="file"> -->
+                        <img src="" alt="" id="right-panel-header-img">
+                        <p id="right-panel-header-name">Name</p>
+                    </div>
+                    <div class="right-panel-header-svg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 12 12">
+                            <path fill="currentColor"
+                                d="M5.561 2.551a.84.84 0 0 0-1.033-.514c-.973.3-1.653 1.135-1.507 2.101A8.7 8.7 0 0 0 4.092 7.18a8.8 8.8 0 0 0 2.083 2.445c.754.61 1.812.442 2.558-.258A.85.85 0 0 0 8.81 8.21l-.534-.653a.845.845 0 0 0-.91-.272l-1.232.39l-.215-.222a5 5 0 0 1-.706-.929a4.8 4.8 0 0 1-.446-1.079l-.083-.295l.95-.875a.86.86 0 0 0 .221-.935zm-1.327-1.47a1.84 1.84 0 0 1 2.264 1.121l.293.788a1.86 1.86 0 0 1-.48 2.019l-.49.451c.063.174.148.373.258.566c.11.19.238.363.355.504l.63-.2a1.845 1.845 0 0 1 1.985.593l.534.653a1.85 1.85 0 0 1-.166 2.52c-.994.933-2.617 1.32-3.87.306a9.8 9.8 0 0 1-2.32-2.722a9.7 9.7 0 0 1-1.195-3.393c-.24-1.593.903-2.806 2.202-3.205" />
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24">
+                            <path fill="currentColor" fill-rule="evenodd"
+                                d="M3.2 6.7v10.6h12.6V6.7zM3 5.5h13a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1m16.2 7.923l2.6 2.08V8.497l-2.6 2.08zM18 10l3.375-2.7A1 1 0 0 1 23 8.08v7.84a1 1 0 0 1-1.625.78L18 14z" />
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 32 32">
+                            <path fill="currentColor"
+                                d="M19 3C13.488 3 9 7.488 9 13c0 2.395.84 4.59 2.25 6.313L3.281 27.28l1.439 1.44l7.968-7.969A9.92 9.92 0 0 0 19 23c5.512 0 10-4.488 10-10S24.512 3 19 3m0 2c4.43 0 8 3.57 8 8s-3.57 8-8 8s-8-3.57-8-8s3.57-8 8-8" />
+                        </svg>
+                    </div>
+
+                </div>
+                <ul class="right-panel-ul" style="display:none">
+
+                    <li id="closechat">Close Chat</li>
+                    <!-- NEW: select options  -->
+                    <li id="selectThisOption">Select chat</li>
+                    <li id="selectAllOption">Select All</li>
+                </ul>
                 <div class="right-panel-search">
 
-                    <svg width="2rem" height="2rem" xmlns="http://www.w3.org/2000/svg"
+                    <input type="file" name="" id="attachment">
+                    <svg id="realattachment" width="2.5rem" height="2.5rem" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
                         <path fill="#ffffff"
                             d="M288.6 76.8C344.8 20.6 436 20.6 492.2 76.8C548.4 133 548.4 224.2 492.2 280.4L328.2 444.4C293.8 478.8 238.1 478.8 203.7 444.4C169.3 410 169.3 354.3 203.7 319.9L356.5 167.3C369 154.8 389.3 154.8 401.8 167.3C414.3 179.8 414.3 200.1 401.8 212.6L249 365.3C239.6 374.7 239.6 389.9 249 399.2C258.4 408.5 273.6 408.6 282.9 399.2L446.9 235.2C478.1 204 478.1 153.3 446.9 122.1C415.7 90.9 365 90.9 333.8 122.1L169.8 286.1C116.7 339.2 116.7 425.3 169.8 478.4C222.9 531.5 309 531.5 362.1 478.4L492.3 348.3C504.8 335.8 525.1 335.8 537.6 348.3C550.1 360.8 550.1 381.1 537.6 393.6L407.4 523.6C329.3 601.7 202.7 601.7 124.6 523.6C46.5 445.5 46.5 318.9 124.6 240.8L288.6 76.8z" />
                     </svg>
-                    <svg width="2rem" height="2rem" xmlns="http://www.w3.org/2000/svg"
+                    <svg width="2.5rem" height="2.5rem" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
                         <path fill="#ffffff"
                             d="M528 320C528 205.1 434.9 112 320 112C205.1 112 112 205.1 112 320C112 434.9 205.1 528 320 528C434.9 528 528 434.9 528 320zM64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C178.6 576 64 461.4 64 320zM241.3 383.4C256.3 399 282.4 416 320 416C357.6 416 383.7 399 398.7 383.4C407.9 373.8 423.1 373.5 432.6 382.7C442.1 391.9 442.5 407.1 433.3 416.6C411.2 439.6 373.3 464 320 464C266.7 464 228.8 439.6 206.7 416.6C197.5 407 197.8 391.8 207.4 382.7C217 373.6 232.2 373.8 241.3 383.4zM208 272C208 254.3 222.3 240 240 240C257.7 240 272 254.3 272 272C272 289.7 257.7 304 240 304C222.3 304 208 289.7 208 272zM400 240C417.7 240 432 254.3 432 272C432 289.7 417.7 304 400 304C382.3 304 368 289.7 368 272C368 254.3 382.3 240 400 240z" />
+                    </svg>
+                    <!-- <input type="radio" name="" id=""> -->
+                     <svg id="realattachment" width="2.5rem" height="2.5rem" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                        <path fill="#ffffff"
+                            d="M288.6 76.8C344.8 20.6 436 20.6 492.2 76.8C548.4 133 548.4 224.2 492.2 280.4L328.2 444.4C293.8 478.8 238.1 478.8 203.7 444.4C169.3 410 169.3 354.3 203.7 319.9L356.5 167.3C369 154.8 389.3 154.8 401.8 167.3C414.3 179.8 414.3 200.1 401.8 212.6L249 365.3C239.6 374.7 239.6 389.9 249 399.2C258.4 408.5 273.6 408.6 282.9 399.2L446.9 235.2C478.1 204 478.1 153.3 446.9 122.1C415.7 90.9 365 90.9 333.8 122.1L169.8 286.1C116.7 339.2 116.7 425.3 169.8 478.4C222.9 531.5 309 531.5 362.1 478.4L492.3 348.3C504.8 335.8 525.1 335.8 537.6 348.3C550.1 360.8 550.1 381.1 537.6 393.6L407.4 523.6C329.3 601.7 202.7 601.7 124.6 523.6C46.5 445.5 46.5 318.9 124.6 240.8L288.6 76.8z" />
                     </svg>
                     <!-- <i class="fa-regular fa-paperclip fa-flip-both" style="color: #ff0000;"></i> -->
                     <!-- <i hidden="false"  class="fa-light fa-face-smile" style="color: #ffffff;"></i> -->

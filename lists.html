@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Lists & Styling Demo</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f9f9f9;
+    }
+
+    h2 {
+        color: #333;
+        margin-top: 40px;
+    }
+
+    /* ====== BASIC STYLING ====== */
+    .no-bullets {
+        list-style-type: none;
+    }
+
+    .square-bullets {
+        list-style-type: square;
+    }
+
+    .roman-numbers {
+        list-style-type: upper-roman;
+    }
+
+    /* ====== CUSTOM IMAGE BULLETS ====== */
+    .image-bullets {
+        list-style-image: url('https://cdn-icons-png.flaticon.com/512/616/616408.png'); /* small icon */
+    }
+
+    /* ====== POSITION INSIDE ====== */
+    .inside-bullets {
+        list-style-position: inside;
+        background: #eef;
+        padding: 10px;
+    }
+
+    /* ====== CUSTOM ICONS USING ::before ====== */
+    .custom-icons {
+        list-style: none;
+        padding: 0;
+    }
+
+    .custom-icons li::before {
+        content: "🔥";
+        margin-right: 8px;
+    }
+
+    /* ====== HORIZONTAL MENU ====== */
+    .horizontal-menu {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+        padding: 0;
+        background: #333;
+        padding: 10px;
+    }
+
+    .horizontal-menu li {
+        color: white;
+        cursor: pointer;
+    }
+
+    /* ====== FANCY NUMBERING ====== */
+    .fancy-numbers {
+        list-style: none;
+        counter-reset: my-counter;
+        padding: 0;
+    }
+
+    .fancy-numbers li {
+        counter-increment: my-counter;
+        margin: 5px 0;
+        padding: 5px;
+        background: #ffeaa7;
+        border-radius: 5px;
+    }
+
+    .fancy-numbers li::before {
+        content: counter(my-counter) ". ";
+        font-weight: bold;
+        color: #d63031;
+    }
+
+    /* Description list styling */
+    dl {
+        background: #f1f1f1;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    dt {
+        font-weight: bold;
+        margin-top: 10px;
+        color: #0984e3;
+    }
+
+    dd {
+        margin-left: 20px;
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+
+<h1>HTML Lists & Styling Examples</h1>
+
+<!-- Ordered List -->
+<h2>1. Ordered List (Default)</h2>
+<ol>
+    <li>Wake up</li>
+    <li>Brush teeth</li>
+    <li>Have breakfast</li>
+</ol>
+
+<!-- Ordered List - Roman Numbers -->
+<h2>2. Ordered List (Roman Numbers)</h2>
+<ol class="roman-numbers">
+    <li>Step One</li>
+    <li>Step Two</li>
+    <li>Step Three</li>
+</ol>
+
+<!-- Unordered List -->
+<h2>3. Unordered List (Default)</h2>
+<ul>
+    <li>Mango</li>
+    <li>Banana</li>
+    <li>Apple</li>
+</ul>
+
+<!-- Square Bullets -->
+<h2>4. Unordered List (Square Bullets)</h2>
+<ul class="square-bullets">
+    <li>Item One</li>
+    <li>Item Two</li>
+</ul>
+
+<!-- No Bullets -->
+<h2>5. Unordered List (No Bullets)</h2>
+<ul class="no-bullets">
+    <li>Plain List Item 1</li>
+    <li>Plain List Item 2</li>
+</ul>
+
+<!-- Image Bullets -->
+<h2>6. Custom Image Bullets</h2>
+<ul class="image-bullets">
+    <li>Star Item 1</li>
+    <li>Star Item 2</li>
+</ul>
+
+<!-- Inside Bullets -->
+<h2>7. Inside Bullets</h2>
+<ul class="inside-bullets">
+    <li>Inside Position Item 1</li>
+    <li>Inside Position Item 2</li>
+</ul>
+
+<!-- Custom Icons with ::before -->
+<h2>8. Custom Icons with ::before</h2>
+<ul class="custom-icons">
+    <li>Fire Item 1</li>
+    <li>Fire Item 2</li>
+</ul>
+
+<!-- Horizontal Menu -->
+<h2>9. Horizontal Menu (List Styled)</h2>
+<ul class="horizontal-menu">
+    <li>Home</li>
+    <li>About</li>
+    <li>Services</li>
+    <li>Contact</li>
+</ul>
+
+<!-- Fancy Numbering -->
+<h2>10. Fancy Numbering with CSS</h2>
+<ol class="fancy-numbers">
+    <li>Custom number style 1</li>
+    <li>Custom number style 2</li>
+    <li>Custom number style 3</li>
+</ol>
+
+<!-- Description List -->
+<h2>11. Description List</h2>
+<dl>
+    <dt>HTML</dt>
+    <dd>Markup language for structuring web pages.</dd>
+    <dt>CSS</dt>
+    <dd>Language for styling HTML.</dd>
+</dl>
+
+<!-- Nested Lists -->
+<h2>12. Nested Lists</h2>
+<ol>
+    <li>Fruits
+        <ul>
+            <li>Mango</li>
+            <li>Apple</li>
+        </ul>
+    </li>
+    <li>Vegetables
+        <ul>
+            <li>Potato</li>
+            <li>Carrot</li>
+        </ul>
+    </li>
+</ol>
+
+</body>
+</html>

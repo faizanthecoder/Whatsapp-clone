@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <button id="start">🎤 Start Recording</button>
+<button id="stop">⏹ Stop</button>
+<a id="download" href="#">Download</a>
+
+<script>
+let mediaRecorder;
+let audioChunks = [];
+
+document.getElementById('start').onclick = async () => {
+  let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  mediaRecorder = new MediaRecorder(stream);
+  audioChunks = [];
+
+  mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+
+  mediaRecorder.onstop = () => {
+    let blob = new Blob(audioChunks, { type: 'audio/wav' });
+    let url = URL.createObjectURL(blob);
+    document.getElementById('download').href = url;
+    document.getElementById('download').download = 'recording.wav';
+  };
+
+  mediaRecorder.start();
+};
+
+document.getElementById('stop').onclick = () => {
+  mediaRecorder.stop();
+};
+</script>
+
+
+</body>
+</html>
